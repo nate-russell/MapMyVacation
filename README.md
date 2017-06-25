@@ -6,8 +6,7 @@ In my mind, this will be a dockerized program with a config file that points to 
 
 ## Rough Plan
 1. Build Thumbnail Library
-    a. Get image thumbnails from imgur albums using [API](https://apidocs.imgur.com/#intro)
-    ***or***
+    a. Get image thumbnails from imgur albums using [API](https://apidocs.imgur.com/#intro) ***or***
     b. Traverse local image file directories and Post images to imgur
 2. Visualize on a map
     1. Figure out where the photos should be on the map
@@ -18,8 +17,8 @@ In my mind, this will be a dockerized program with a config file that points to 
         b. [Points on map](https://bl.ocks.org/mbostock/9943478)
 3. Visual Semantic Embedding inspired by [this](http://cs.stanford.edu/people/karpathy/cnnembed/)
     1. Use Tensorflow to get CNN codes
-        a. [pre-trained models](https://github.com/tensorflow/models/tree/master/slim) would be easiest
-        ***or***
+        a. [pre-trained models](https://github.com/tensorflow/models/tree/master/slim) would be easiest ***or***
+
         b. if pre-trained models aren't sufficient then maybe a self-supervised in-painting model, split-brain autoencoder, GAN or VAE
     2. Use [largevis](https://github.com/lferry007/LargeVis) to get 2d coordinates
     3. USe D3.js to visualize and interact
