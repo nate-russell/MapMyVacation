@@ -1,4 +1,23 @@
 {
-  "YellowStone":[44.543103, -110.528462,"MADERA MUNICIPAL AIRPORT", [26,1,2,5,6,3,2,1,2,7,29,12,3]],
-  "Chicago":[41.889896, -87.650755,"SAN JOSE INTERNATIONAL  AIRPORT",[28,1,1,1,6,10,5,3,2,4,14,21,7]]
+  "YellowStone":{
+    "lat":44.543103,
+    "lng":-110.528462,
+    "pattern":"url(#yellowstone)",
+    "img":"http://i.imgur.com/uZRhhDut.jpg",
+    "link":"www.google.com"
+  },
+  "Chicago":{
+    "lat":41.889896,
+    "lng":-87.650755,
+    "pattern":"url(#chicago)",
+    "img":"http://i.imgur.com/NMmUqFOt.jpg",
+    "link":"www.google.com"
+  },
+  "Alaska":{
+    "lat":58.876364,
+    "lng":-136.674042,
+    "pattern":"url(#chicago)",
+    "img":"https://media.giphy.com/media/KHf5E7jp0iGfC/giphy.gif",
+    "link":"www.google.com"
+  }
 }
