@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHn1WnMhCF-Me1-P0b4p_2wNxePg6JRGA"></script>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+    <style type="text/css">
+
+html, body, #map {
+  width: 800px;
+  height: 500px;
+  margin: 0;
+  padding: 0;
+}
+
+.marker {
+  fill: orange;
+  stroke: black;
+  stroke-width: 1.5px;
+}
+
+.marker:hover {
+  cursor: crosshair;
+}
+
+.stations {
+  background-color: rgba(0,0,0,0);
+}
+
+  </style>
+  </head>
+  <body>
+
+  <!--
+  <svg id="mySvg" width="80" height="80">
+      <defs id="mdef">
+        <pattern id="chicago" x="0" y="0" height="80" width="80">
+          <image x="0" y="0" width="80" height="80" xlink:href="http://i.imgur.com/uZRhhDut.jpg"></image>
+        </pattern>
+  </defs>-->
+
+    <div id="map"></div>
+    <script type="text/javascript">
+
+// Create the Google Map…
+var map = new google.maps.Map(d3.select("#map").node(), {
+  zoom: 1,
+  center: new google.maps.LatLng(37.76487, -122.41948),
+  mapTypeId: google.maps.MapTypeId.TERRAIN
+});
+
+
+
+// Load the station data. When the data comes back, create an overlay.
+d3.json("data.json", function(data) {
+  // fit the map to the boundaries of all available data points and
+  // ONCE generate google LatLng objects to be re-used repeatedly
+  var bounds = new google.maps.LatLngBounds();
+  d3.entries(data).forEach(function(d){
+    bounds.extend(d.value.lat_lng = new google.maps.LatLng(d.value[0], d.value[1]));
+  });
+  map.fitBounds(bounds);
+
+  var overlay = new google.maps.OverlayView(),
+      r = 20,
+      padding = r*2;
+  // Add the container when the overlay is added to the map.
+  overlay.onAdd = function() {
+    var layer = d3.select(this.getPanes().overlayMouseTarget)
+        .append("svg")
+        .attr('class','stations');
+    overlay.draw = function(){
+      var projection = this.getProjection(),
+          sw = projection.fromLatLngToDivPixel(bounds.getSouthWest()),
+          ne = projection.fromLatLngToDivPixel(bounds.getNorthEast());
+      // extend the boundaries so that markers on the edge aren't cut in half
+      sw.x -= padding;
+      sw.y += padding;
+      ne.x += padding;
+      ne.y -= padding;
+
+      d3.select('.stations')
+        .attr('width',(ne.x - sw.x) + 'px')
+        .attr('height',(sw.y - ne.y) + 'px')
+        .style('position','absolute')
+        .style('left',sw.x+'px')
+        .style('top',ne.y+'px');
+
+
+
+      var marker = layer.selectAll('.marker')
+        .data(d3.entries(data))
+        .each(transform);
+
+      var circle = marker.enter().append('circle')
+        .attr('class','marker');
+
+      var defs = layer.append('svg:defs');
+
+        defs.append("svg:pattern")
+            .attr("id", "chicago")
+            .attr("width", r)
+            .attr("height", r)
+            .attr("patternUnits", "userSpaceOnUse")
+            .append("svg:image")
+            .attr("xlink:href", 'http://i.imgur.com/uZRhhDut.jpg')
+            .attr("padding",0)
+            .attr("width", r)
+            .attr("height", r)
+            .attr("x", 0)
+            .attr("y", 0);
+
+      circle.attr('r',r)
+         .style("fill", "url(#chicago)")
+         .style("stroke", "black")
+         .style("stroke-width", 1)
+        .on("mouseover", function(){d3.select(this)
+                   .style("fill", "url(#chicago)")
+                   .attr("r", r*2);})
+          .on("mouseout", function(){d3.select(this)
+                   .style("fill", "url(#chicago)")
+                   .attr("r", r);})
+
+        .attr('cx',function(d) {
+            console.log(d)
+          d = projection.fromLatLngToDivPixel(d.value.lat_lng);
+          return d.x-sw.x;
+        })
+        .attr('cy',function(d) {
+          d = projection.fromLatLngToDivPixel(d.value.lat_lng);
+          return d.y-ne.y;
+        })
+        .append('title').text(function(d){
+
+          return d.key;
+        });
+
+      function transform(d) {
+        d = projection.fromLatLngToDivPixel(d.value.lat_lng);
+        return d3.select(this)
+          .attr('cx',d.x-sw.x)
+          .attr('cy',d.y-ne.y);
+      }
+    };
+  };
+
+  // Bind our overlay to the map…
+  overlay.setMap(map);
+});
+
+    </script>
+  </body>
+</html>
