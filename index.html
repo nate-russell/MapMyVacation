@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHn1WnMhCF-Me1-P0b4p_2wNxePg6JRGA"></script>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+    <style type="text/css">
+
+html, body, #map {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.marker {
+  fill: orange;
+  stroke: black;
+  stroke-width: 1.5px;
+}
+
+.marker:hover {
+  cursor: crosshair;
+}
+
+.stations {
+  background-color: rgba(0,0,0,0);
+}
+
+  </style>
+  </head>
+  <body>
+
+  <!--
+  <svg id="mySvg" width="80" height="80">
+      <defs id="mdef">
+        <pattern id="chicago" x="0" y="0" height="80" width="80">
+          <image x="0" y="0" width="80" height="80" xlink:href="http://i.imgur.com/uZRhhDut.jpg"></image>
+        </pattern>
+  </defs>-->
+
+    <div id="map"></div>
+    <script type="text/javascript">
+
+// Create the Google Map…
+var map = new google.maps.Map(d3.select("#map").node(), {
+  zoom: 1,
+  center: new google.maps.LatLng(37.76487, -122.41948),
+  mapTypeId: google.maps.MapTypeId.TERRAIN
+});
+
+
+
+// Load the station data. When the data comes back, create an overlay.
+d3.json("/map_viz/data.json", function(data) {
+  // fit the map to the boundaries of all available data points and
+  // ONCE generate google LatLng objects to be re-used repeatedly
+  var bounds = new google.maps.LatLngBounds();
+  d3.entries(data).forEach(function(d){
+    bounds.extend(d.value.lat_lng = new google.maps.LatLng(d.value.lat, d.value.lng));
+  });
+  index.fitBounds(bounds);
+
+  var overlay = new google.maps.OverlayView(),
+      r = 30,
+      m = 6,
+      padding = r*3;
+  // Add the container when the overlay is added to the map.
+  overlay.onAdd = function() {
+    var layer = d3.select(this.getPanes().overlayMouseTarget)
+        .append("svg")
+        .attr('class','stations');
+    overlay.draw = function(){
+      var projection = this.getProjection(),
+          sw = projection.fromLatLngToDivPixel(bounds.getSouthWest()),
+          ne = projection.fromLatLngToDivPixel(bounds.getNorthEast());
+      // extend the boundaries so that markers on the edge aren't cut in half
+      sw.x -= padding;
+      sw.y += padding;
+      ne.x += padding;
+      ne.y -= padding;
+
+      d3.select('.stations')
+        .attr('width',(ne.x - sw.x) + 'px')
+        .attr('height',(sw.y - ne.y) + 'px')
+        .style('position','absolute')
+        .style('left',sw.x+'px')
+        .style('top',ne.y+'px');
+
+
+
+      var marker = layer.selectAll('.marker')
+        .data(d3.entries(data))
+        .each(transform)
+        .each(transformc);
+
+      // Add Patterns for every image
+      var defs = marker.enter().append('svg:defs');
+
+      d3.entries(data).forEach(function(d){
+          defs.append("svg:pattern")
+                  .attr("id", d.key)
+                  .attr("width", r*m)
+                  .attr("height", r*m)
+                  .attr("x", 0)
+                  .attr("y", 0)
+                  .attr("patternUnits", "userSpaceOnUse")
+                  //.attr("patternContentUnits", "objectBoundingBox")
+                  .append("svg:image")
+                  .attr("xlink:href", d.value.img)
+                  .attr("padding",0)
+                  .attr("width", r*m)
+                  .attr("height", r*m)
+                  .attr("cx", function(d) {
+                        d = projection.fromLatLngToDivPixel(d.value.lat_lng);
+                        return d.x;})
+                  .attr("cy", function(d) {
+                        d = projection.fromLatLngToDivPixel(d.value.lat_lng);
+                        return d.y;});
+      });
+
+
+      /**
+      var circle = marker.enter().append('svg:circle')
+        .attr('class','marker')
+        .attr('r',r)
+         .style("fill", function(d){return 'url(#'+d.key+')';})
+         .style("stroke", "black")
+         .style("stroke-width", 1)
+        .on("mouseover", function(d){d3.select(this)
+                   .style("fill", 'url(#'+d.key+')')
+                   .attr("r", r*3);})
+          .on("mouseout", function(d){d3.select(this)
+                   .style("fill", 'url(#'+d.key+')')
+                   .attr("r", r);})
+
+        .attr('cx',function(d) {
+          d = projection.fromLatLngToDivPixel(d.value.lat_lng);
+          return d.x-sw.x;
+        })
+        .attr('cy',function(d) {
+          d = projection.fromLatLngToDivPixel(d.value.lat_lng);
+          return d.y-ne.y;
+        })
+        .append('title').text(function(d){
+
+          return d.key;
+        });
+
+
+      var circle = marker.enter().append('svg:circle')
+        .attr('class','marker')
+        .attr('r',r)
+         .style("fill", function(d){return 'url(#'+d.key+')';})
+         .style("stroke", "black")
+         .style("stroke-width", 1)
+        .on("mouseover", function(d){d3.select(this)
+                   .style("fill", 'url(#'+d.key+')')
+                   .attr("r", r*3);})
+          .on("mouseout", function(d){d3.select(this)
+                   .style("fill", 'url(#'+d.key+')')
+                   .attr("r", r);})
+
+        .attr('cx',function(d) {
+          d = projection.fromLatLngToDivPixel(d.value.lat_lng);
+          return d.x-sw.x;
+        })
+        .attr('cy',function(d) {
+          d = projection.fromLatLngToDivPixel(d.value.lat_lng);
+          return d.y-ne.y;
+        })
+        .append('title').text(function(d){
+
+          return d.key;
+        });
+
+
+
+      var clippath = marker.enter().append("clipPath")       // define a clip path
+          .attr("id", function(d){return d.key+'_clip';}) // give the clipPath an ID
+          .append("ellipse")          // shape it as an ellipse
+          .attr('cx',function(d) {
+              d = projection.fromLatLngToDivPixel(d.value.lat_lng);
+              return d.x-sw.x+(r/2);
+          })
+          .attr('cy',function(d) {
+              d = projection.fromLatLngToDivPixel(d.value.lat_lng);
+              return d.y-ne.y+(r/2);
+          })
+          .attr("rx", 10)         // set the x radius
+          .attr("ry", 10)
+          .on("mouseout", function(d){d3.select(this)
+              .attr('cx',function(d) {
+                    d = projection.fromLatLngToDivPixel(d.value.lat_lng);
+                    return d.x-sw.x+(r/2);
+              })
+              .attr('cy',function(d) {
+                    d = projection.fromLatLngToDivPixel(d.value.lat_lng);
+                    return d.y-ne.y+(r/2);
+              })
+              .attr("rx", 10)         // set the x radius
+              .attr("ry", 10);
+          })
+          .on("mouseover", function(d){d3.select(this)
+              .attr('cx',function(d) {
+                    d = projection.fromLatLngToDivPixel(d.value.lat_lng);
+                    return d.x-sw.x+(r*m/2);
+              })
+              .attr('cy',function(d) {
+                    d = projection.fromLatLngToDivPixel(d.value.lat_lng);
+                    return d.y-ne.y+(r*m/2);
+              })
+              .attr("rx", 10*m)         // set the x radius
+              .attr("ry", 10*m);
+          });         // set the y radius
+       **/
+
+
+      var image = marker.enter().append('svg:image')
+          .attr('class','marker')
+          .attr("xlink:href",  function(d) {return d.value.img;})
+          .attr("height", r)
+          .attr("width", r)
+          .attr("clip-path", function(d){return "url(#"+d.key+"_clip)";}) // clip the image
+          .on("mouseover", function(d){d3.select(this)
+              .attr("height", r*m)
+              .attr("width", r*m);
+          })
+          .on("mouseout", function(d){d3.select(this)
+              .attr("height", r)
+              .attr("width", r);
+          })
+          .attr('x',function(d) {
+              d = projection.fromLatLngToDivPixel(d.value.lat_lng);
+              return d.x-sw.x;
+          })
+          .attr('y',function(d) {
+              d = projection.fromLatLngToDivPixel(d.value.lat_lng);
+              return d.y-ne.y;
+          });
+
+      function transform(d) {
+        d = projection.fromLatLngToDivPixel(d.value.lat_lng);
+        return d3.select(this)
+          .attr('x',d.x-sw.x)
+          .attr('y',d.y-ne.y);
+      }
+      function transformc(d) {
+        d = projection.fromLatLngToDivPixel(d.value.lat_lng);
+        return d3.select(this)
+          .attr('cx',d.x-sw.x)
+          .attr('cy',d.y-ne.y);
+      }
+    };
+  };
+
+  // Bind our overlay to the map…
+  overlay.setMap(index);
+});
+
+    </script>
+  </body>
+</html>
