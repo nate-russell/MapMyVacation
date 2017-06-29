@@ -64,7 +64,7 @@ d3.json("data.json", function(data) {
   var overlay = new google.maps.OverlayView(),
       r = 30,
       m = 6,
-      padding = r*3;
+      padding = r * m;
   // Add the container when the overlay is added to the map.
   overlay.onAdd = function() {
     var layer = d3.select(this.getPanes().overlayMouseTarget)
@@ -93,6 +93,7 @@ d3.json("data.json", function(data) {
         .each(transformc);
 
       // Add Patterns for every image
+        /**
       var defs = marker.enter().append('svg:defs');
 
       d3.entries(data).forEach(function(d){
@@ -118,7 +119,7 @@ d3.json("data.json", function(data) {
       });
 
 
-      /**
+
       var circle = marker.enter().append('svg:circle')
         .attr('class','marker')
         .attr('r',r)
@@ -213,12 +214,12 @@ d3.json("data.json", function(data) {
           });         // set the y radius
        **/
 
-
       var image = marker.enter().append('svg:image')
           .attr('class','marker')
           .attr("xlink:href",  function(d) {return d.value.img;})
           .attr("height", r)
           .attr("width", r)
+            .attr("preserveAspectRatio", "xMidYMid slice")
           .attr("clip-path", function(d){return "url(#"+d.key+"_clip)";}) // clip the image
           .on("mouseover", function(d){d3.select(this)
               .attr("height", r*m)
@@ -230,11 +231,11 @@ d3.json("data.json", function(data) {
           })
           .attr('x',function(d) {
               d = projection.fromLatLngToDivPixel(d.value.lat_lng);
-              return d.x-sw.x;
+              return d.x - sw.x - (r / 2);
           })
           .attr('y',function(d) {
               d = projection.fromLatLngToDivPixel(d.value.lat_lng);
-              return d.y-ne.y;
+              return d.y - ne.y - (r / 2);
           });
 
       function transform(d) {
