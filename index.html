@@ -52,7 +52,7 @@ var map = new google.maps.Map(d3.select("#map").node(), {
 
 
 // Load the station data. When the data comes back, create an overlay.
-d3.json("/map_viz/data.json", function(data) {
+d3.json("data.json", function(data) {
   // fit the map to the boundaries of all available data points and
   // ONCE generate google LatLng objects to be re-used repeatedly
   var bounds = new google.maps.LatLngBounds();
