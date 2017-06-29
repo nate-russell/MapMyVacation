@@ -59,7 +59,7 @@ d3.json("data.json", function(data) {
   d3.entries(data).forEach(function(d){
     bounds.extend(d.value.lat_lng = new google.maps.LatLng(d.value.lat, d.value.lng));
   });
-  index.fitBounds(bounds);
+    map.fitBounds(bounds);
 
   var overlay = new google.maps.OverlayView(),
       r = 30,
@@ -86,8 +86,6 @@ d3.json("data.json", function(data) {
         .style('position','absolute')
         .style('left',sw.x+'px')
         .style('top',ne.y+'px');
-
-
 
       var marker = layer.selectAll('.marker')
         .data(d3.entries(data))
@@ -255,7 +253,7 @@ d3.json("data.json", function(data) {
   };
 
   // Bind our overlay to the map…
-  overlay.setMap(index);
+    overlay.setMap(map);
 });
 
     </script>
