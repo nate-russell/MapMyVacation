@@ -18,7 +18,7 @@
   "Alaska I":{
     "lat":58.876364,
     "lng": -136.674042,
-    "albumid": "a/5w9Ag",
+    "albumid": "a/ZH86c",
     "pattern":"url(#chicago)",
     "img":"https://media.giphy.com/media/5TMTrJGpODMqI/giphy.gif",
     "link":"www.google.com"
@@ -26,7 +26,7 @@
   "Alaska II":{
     "lat":61.134418,
     "lng": -150.000751,
-    "albumid": "a/5w9Ag",
+    "albumid": "a/ZH86c",
     "pattern":"url(#chicago)",
     "img":"https://media.giphy.com/media/DfaF9q6Iik1qM/giphy.gif",
     "link":"www.google.com"
@@ -34,7 +34,7 @@
     "Antelope Canyon":{
     "lat":36.861466,
       "lng": -111.370543,
-      "albumid": "a/5w9Ag",
+      "albumid": "a/my4Qi",
     "pattern":"url(#chicago)",
     "img":"https://media.giphy.com/media/eGEBKVq502Zjy/giphy.gif",
     "link":"www.google.com"
@@ -42,7 +42,7 @@
     "Bryce Canyon":{
     "lat":37.568932,
       "lng": -112.186577,
-      "albumid": "a/5w9Ag",
+      "albumid": "a/zhoDC",
     "pattern":"url(#chicago)",
     "img":"https://media.giphy.com/media/13FUG7yeUubmj6/giphy.gif",
     "link":"www.google.com"
@@ -50,7 +50,7 @@
     "Champaign":{
     "lat":40.120271,
       "lng": -88.250331,
-      "albumid": "a/5w9Ag",
+      "albumid": "a/WQ1nq",
     "pattern":"url(#chicago)",
     "img":"https://media.giphy.com/media/csclykwLnJu9O/giphy.gif",
     "link":"www.google.com"
@@ -58,7 +58,7 @@
       "Grand Canyon":{
     "lat":36.036904,
         "lng": -112.098810,
-        "albumid": "a/5w9Ag",
+        "albumid": "a/5GKEb",
     "pattern":"url(#chicago)",
     "img":"https://media.giphy.com/media/2MOGCHSjDZJBK/giphy.gif",
     "link":"www.google.com"
@@ -66,14 +66,14 @@
       "Las Vegas":{
     "lat":36.185431,
         "lng": -115.160580,
-        "albumid": "a/5w9Ag",
+        "albumid": "a/E2wDb",
     "pattern":"url(#chicago)",
     "img":"https://media.giphy.com/media/lV0uD53eDEj8k/giphy.gif",
     "link":"www.google.com"
   },    "Michigan UP":{
     "lat":46.620554,
   "lng": -86.252934,
-  "albumid": "a/5w9Ag",
+  "albumid": "a/rQOBj",
     "pattern":"url(#chicago)",
     "img":"https://media.giphy.com/media/9SaA75ucARgnm/giphy.gif",
     "link":"www.google.com"
@@ -81,7 +81,7 @@
       "Grand Tetons":{
     "lat":43.739904,
         "lng": -110.787435,
-        "albumid": "a/5w9Ag",
+        "albumid": "a/S6tfd",
     "pattern":"url(#chicago)",
     "img":"https://media.giphy.com/media/fB4m6XIB13MuA/giphy.gif",
     "link":"www.google.com"
@@ -89,14 +89,14 @@
       "Mt. Rainier":{
     "lat":46.852164,
         "lng": -121.760296,
-        "albumid": "a/5w9Ag",
+        "albumid": "a/qwB35",
     "pattern":"url(#chicago)",
     "img":"https://media.giphy.com/media/G8HZ35kv3WmUo/giphy.gif",
     "link":"www.google.com"
   },    "New York City":{
     "lat":40.697841,
   "lng": -74.045981,
-  "albumid": "a/5w9Ag",
+  "albumid": "a/zR7Qu",
     "pattern":"url(#chicago)",
     "img":"https://media.giphy.com/media/vueTvJDpNmixW/giphy.gif",
     "link":"www.google.com"
@@ -105,7 +105,7 @@
       "Niagra Falls":{
     "lat":43.083940,
         "lng": -79.082215,
-        "albumid": "a/5w9Ag",
+        "albumid": "a/Pixo5",
     "pattern":"url(#chicago)",
     "img":"https://media.giphy.com/media/Htb9h9v5VivwA/giphy.gif",
     "link":"www.google.com"
@@ -113,7 +113,7 @@
       "Olympic National Park":{
     "lat":47.762407,
         "lng": -123.619537,
-        "albumid": "a/5w9Ag",
+        "albumid": "a/h11tf",
     "pattern":"url(#chicago)",
     "img":"https://media.giphy.com/media/GQ5g6DjGl6b72/giphy.gif",
     "link":"www.google.com"
@@ -128,14 +128,14 @@
       "Page AZ":{
     "lat":36.879489,
     "lng":-111.513555,
-        "albumid": "a/5w9Ag",
+        "albumid": "a/orXss",
     "pattern":"url(#chicago)",
     "img":"https://media.giphy.com/media/blzsjRPhXZkfC/giphy.gif",
     "link":"www.google.com"
   },    "Vancouver":{
     "lat":49.309357,
     "lng": -123.193084,
-  "albumid": "a/5w9Ag",
+  "albumid": "a/BE0MF",
     "pattern":"url(#chicago)",
     "img":"https://media.giphy.com/media/xXs4GNAxWdu3S/giphy.gif",
     "link":"www.google.com"
@@ -143,14 +143,14 @@
       "Zion":{
     "lat":37.309532,
     "lng":-112.976630,
-        "albumid": "a/5w9Ag",
+        "albumid": "a/Ayv1P",
     "pattern":"url(#chicago)",
     "img":"https://media.giphy.com/media/xB0hKCK4qyZ68/giphy.gif",
     "link":"www.google.com"
   },    "Salt Lake City":{
     "lat":40.811177,
   "lng": -112.030005,
-  "albumid": "a/5w9Ag",
+  "albumid": "a/WcVFx",
     "pattern":"url(#chicago)",
     "img":"https://media.giphy.com/media/sa9wmO6J66l6E/giphy.gif",
     "link":"www.google.com"

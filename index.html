@@ -4,6 +4,7 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHn1WnMhCF-Me1-P0b4p_2wNxePg6JRGA"></script>
     <script src="//d3js.org/d3.v3.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <style type="text/css">
 
 
@@ -107,11 +108,16 @@ html, body, #map {
 
   <script type="text/javascript">
 
-
+      var album_div = document.getElementById("album");
+      var og_album_div = jQuery.extend(true, {}, album_div);
+      //var og_album_div = jQuery.clone(album_div);
       var album_title = document.getElementById("album_title");
       var album_text = document.getElementById("album_text");
       var album_block = document.getElementById("album_block");
       var album_a = document.getElementById("album_a");
+
+      console.log(og_album_div)
+
 
 // Create the Google Map…
 var map = new google.maps.Map(d3.select("#map").node(), {
@@ -320,27 +326,43 @@ d3.json("data.json", function(data) {
           })
             .on('click', function (d) {
                 d3.select(this)
-                console.log('Clicked!\nPre Function')
-                console.log(document.getElementById("album"))
-                album_block.setAttribute('data-id', d.value.albumid)
-                album_a.setAttribute('href', "//imgur.com/" + d.value.albumid)
+                console.log('Start of Click Status for album_div')
+                console.log(album_div)
+
+                // Update Text
                 album_text.textContent = d.key
                 album_title.textContent = d.key
 
-                var container = document.getElementById("album")
+                // Update Album Div Clone
+                album_block.setAttribute('data-id', d.value.albumid)
+                album_a.setAttribute('href', "//imgur.com/" + d.value.albumid)
+                console.log('Post Update album_block')
+                console.log(album_block.outerHTML)
+
+                //og_album_div.getElementById('album_block').setAttribute('data-id', d.value.albumid)
+                //og_album_div.getElementById('album_a').setAttribute('href', "//imgur.com/" + d.value.albumid)
+                album_div.innerHTML = album_block.outerHTML
+
+                //var container = document.getElementById("album")
                 //container.setAttribute('data-id' , d.value.albumid)
                 //container.setAttribute('href' , "//imgur.com/"+d.value.albumid)
                 //var content = container.innerHTML
                 //container.innerHTML = album_block
 
-
-                console.log('\nPost Function')
-                console.log(document.getElementById("album"))
+                //console.log('\nPost Function')
+                //console.log(og_album_div)
+                //console.log(document.getElementById("album"))
 
                 // Re-Add Embed script that transforms blockquote into iframe
                 var imported = document.createElement('script')
                 imported.src = '//s.imgur.com/min/embed.js'
                 document.body.appendChild(imported)
+
+                console.log('End of Click Status for album_div')
+                console.log(album_div)
+                console.log("------")
+
+
                 ;
 
           })
