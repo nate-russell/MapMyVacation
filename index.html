@@ -6,9 +6,62 @@
     <script src="//d3js.org/d3.v3.min.js"></script>
     <style type="text/css">
 
+
+        #top {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+
+        #main {
+            width: 80%;
+            height: 90%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        #rhs {
+        }
+
+        #lhs {
+        }
+
+        #description {
+            width: 400px;
+            height: 110px;
+            margin-top: 0px;
+            margin-left: 5px;
+            padding-left: 5px;
+            border-radius: 2px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: lightgrey;
+            box-shadow: lightgrey;
+        }
+
+        #album {
+            width: 400px;
+            height: 4px;
+            margin-left: 5px;
+            padding-left: 5px;
+        }
+
+        h1 {
+            color: dodgerblue;
+            font-weight: bold;
+        }
+
+        h2 {
+            color: dodgerblue;
+        }
+
+        h4 {
+            color: lightslategrey;
+        }
+
 html, body, #map {
-  width: 100%;
-  height: 100%;
+    width: 800px;
+    height: 500px;
   margin: 0;
   padding: 0;
 }
@@ -27,20 +80,38 @@ html, body, #map {
   background-color: rgba(0,0,0,0);
 }
 
-  </style>
+    </style>
   </head>
   <body>
+  <div id="top">
+      <h2> Map My Vacation</h2>
+  </div>
+  <div id="main">
+      <div id="lhs">
+          <div id="map"></div>
+      </div>
+      <div id="rhs">
+          <div id="description">
+              <h2 id="album_title"></h2>
+              <h4 id="album_text"></h4>
+          </div>
+          <div id="album">
+              <blockquote id="album_block" class="imgur-embed-pub" lang="en">
+                  <a id="album_a">View Photos on Imgur</a>
+              </blockquote>
+              <script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+          </div>
+      </div>
+  </div>
 
-  <!--
-  <svg id="mySvg" width="80" height="80">
-      <defs id="mdef">
-        <pattern id="chicago" x="0" y="0" height="80" width="80">
-          <image x="0" y="0" width="80" height="80" xlink:href="http://i.imgur.com/uZRhhDut.jpg"></image>
-        </pattern>
-  </defs>-->
 
-    <div id="map"></div>
-    <script type="text/javascript">
+  <script type="text/javascript">
+
+
+      var album_title = document.getElementById("album_title");
+      var album_text = document.getElementById("album_text");
+      var album_block = document.getElementById("album_block");
+      var album_a = document.getElementById("album_a");
 
 // Create the Google Map…
 var map = new google.maps.Map(d3.select("#map").node(), {
@@ -219,15 +290,59 @@ d3.json("data.json", function(data) {
           .attr("xlink:href",  function(d) {return d.value.img;})
           .attr("height", r)
           .attr("width", r)
+            .style("stroke", "black")
+            .style("stroke-width", 5)
             .attr("preserveAspectRatio", "xMidYMid slice")
           .attr("clip-path", function(d){return "url(#"+d.key+"_clip)";}) // clip the image
           .on("mouseover", function(d){d3.select(this)
               .attr("height", r*m)
-              .attr("width", r*m);
+              .attr("width", r * m)
+              //.attr('x',function(d) {
+              //dd = projection.fromLatLngToDivPixel(d.value.lat_lng);
+              //return dd.x - sw.x - (r * m / 2);
+              //})
+              //.attr('y',function(d) {
+              //dd = projection.fromLatLngToDivPixel(d.value.lat_lng);
+              //return dd.y - ne.y - (r * m / 2);
+              //})
           })
           .on("mouseout", function(d){d3.select(this)
               .attr("height", r)
-              .attr("width", r);
+              .attr("width", r)
+              //.attr('x',function(d) {
+              //dd = projection.fromLatLngToDivPixel(d.value.lat_lng);
+              //return dd.x - sw.x + (r * m / 2);
+              //})
+              //.attr('y',function(d) {
+              //dd = projection.fromLatLngToDivPixel(d.value.lat_lng);
+              //return dd.y - ne.y + (r * m / 2);
+              //})
+          })
+            .on('click', function (d) {
+                d3.select(this)
+                console.log('Clicked!\nPre Function')
+                console.log(document.getElementById("album"))
+                album_block.setAttribute('data-id', d.value.albumid)
+                album_a.setAttribute('href', "//imgur.com/" + d.value.albumid)
+                album_text.textContent = d.key
+                album_title.textContent = d.key
+
+                var container = document.getElementById("album")
+                //container.setAttribute('data-id' , d.value.albumid)
+                //container.setAttribute('href' , "//imgur.com/"+d.value.albumid)
+                //var content = container.innerHTML
+                //container.innerHTML = album_block
+
+
+                console.log('\nPost Function')
+                console.log(document.getElementById("album"))
+
+                // Re-Add Embed script that transforms blockquote into iframe
+                var imported = document.createElement('script')
+                imported.src = '//s.imgur.com/min/embed.js'
+                document.body.appendChild(imported)
+                ;
+
           })
           .attr('x',function(d) {
               d = projection.fromLatLngToDivPixel(d.value.lat_lng);

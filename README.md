@@ -1,6 +1,6 @@
 # MapMyVacation
 Visualize Web Hosted photo albums with D3.js and some help from Deep CNNs.
-
+[GitHub Pages Demo (in progress)](https://nate-russell.github.io/MapMyVacation/)
 #### Usage
 In my mind, this will be a dockerized program with a config file that points to your photos and it outputs a directory of files that can be used with the front end code to visualize/ interact with the photos
 
