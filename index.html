@@ -327,8 +327,6 @@ d3.json("data.json", function(data) {
           })
             .on('click', function (d) {
                 d3.select(this)
-                console.log('Start of Click Status for album_div')
-                console.log(album_div)
 
                 // Update Text
                 album_text.textContent = d.key
@@ -340,30 +338,13 @@ d3.json("data.json", function(data) {
                 console.log('Post Update album_block')
                 console.log(album_block.outerHTML)
 
-                //og_album_div.getElementById('album_block').setAttribute('data-id', d.value.albumid)
-                //og_album_div.getElementById('album_a').setAttribute('href', "//imgur.com/" + d.value.albumid)
+                // Inject the HTML content
                 album_div.innerHTML = album_block.outerHTML
-
-                //var container = document.getElementById("album")
-                //container.setAttribute('data-id' , d.value.albumid)
-                //container.setAttribute('href' , "//imgur.com/"+d.value.albumid)
-                //var content = container.innerHTML
-                //container.innerHTML = album_block
-
-                //console.log('\nPost Function')
-                //console.log(og_album_div)
-                //console.log(document.getElementById("album"))
 
                 // Re-Add Embed script that transforms blockquote into iframe
                 var imported = document.createElement('script')
                 imported.src = '//s.imgur.com/min/embed.js'
                 document.body.appendChild(imported)
-
-                console.log('End of Click Status for album_div')
-                console.log(album_div)
-                console.log("------")
-
-
                 ;
 
           })
