@@ -302,8 +302,13 @@ d3.json("data.json", function(data) {
             .attr("preserveAspectRatio", "xMidYMid slice")
           .attr("clip-path", function(d){return "url(#"+d.key+"_clip)";}) // clip the image
           .on("mouseover", function(d){d3.select(this)
-              .attr("height", r*m)
+              .transition()
+              .attr("height", r * m)
               .attr("width", r * m)
+
+              //dd = projection.fromLatLngToDivPixel(d.value.lat_lng)
+              //.attr('x',dd.x - sw.x - (r * m / 2))
+              //.attr('y',dd.y - ne.y - (r * m / 2))
               //.attr('x',function(d) {
               //dd = projection.fromLatLngToDivPixel(d.value.lat_lng);
               //return dd.x - sw.x - (r * m / 2);
@@ -314,15 +319,19 @@ d3.json("data.json", function(data) {
               //})
           })
           .on("mouseout", function(d){d3.select(this)
+              .transition()
               .attr("height", r)
               .attr("width", r)
+              //dd = projection.fromLatLngToDivPixel(d.value.lat_lng)
+              //.attr('x',dd.x - sw.x - (r / 2))
+              //.attr('y',dd.y - ne.y - (r / 2))
               //.attr('x',function(d) {
               //dd = projection.fromLatLngToDivPixel(d.value.lat_lng);
-              //return dd.x - sw.x + (r * m / 2);
+              //return dd.x - sw.x - (r / 2);
               //})
               //.attr('y',function(d) {
               //dd = projection.fromLatLngToDivPixel(d.value.lat_lng);
-              //return dd.y - ne.y + (r * m / 2);
+              //return dd.y - ne.y - (r / 2);
               //})
           })
             .on('click', function (d) {
