@@ -122,8 +122,8 @@ html, body, #map {
 
 // Create the Google Map…
 var map = new google.maps.Map(d3.select("#map").node(), {
-  zoom: 1,
-  center: new google.maps.LatLng(37.76487, -122.41948),
+    //zoom: 1,
+    //center: new google.maps.LatLng(37.76487, -122.41948),
   mapTypeId: google.maps.MapTypeId.TERRAIN
 });
 
@@ -278,8 +278,8 @@ d3.json("data.json", function(data) {
               d = projection.fromLatLngToDivPixel(d.value.lat_lng);
               return d.y-ne.y+(r/2);
           })
-          .attr("rx", 10)         // set the x radius
-          .attr("ry", 10)
+         .attr("rx", r*2)         // set the x radius
+         .attr("ry", r*2)
           .on("mouseout", function(d){d3.select(this)
               .attr('cx',function(d) {
                     d = projection.fromLatLngToDivPixel(d.value.lat_lng);
@@ -303,8 +303,9 @@ d3.json("data.json", function(data) {
               })
               .attr("rx", 10*m)         // set the x radius
               .attr("ry", 10*m);
-          });         // set the y radius
-       **/
+          })**/
+            // ;         // set the y radius
+
 
       var image = marker.enter().append('svg:image')
           .attr('class','marker')
@@ -312,11 +313,14 @@ d3.json("data.json", function(data) {
           .attr("height", r)
           .attr("width", r)
             .style("stroke", "black")
-            .style("stroke-width", 5)
+                .style("stroke-width", 50)
+                .attr("style", "outline: thin solid white;")
             .attr("preserveAspectRatio", "xMidYMid slice")
-            //.attr("clip-path", function(d){return "url(#"+d.key+"_clip)";}) // clip the image
+                .attr("clip-path", function (d) {
+                    return "url(#" + d.key + "_clip)";
+                }) // clip the image
             .on("mouseover", function (d) {
-                d3.select(this).moveToFront()
+                d3.select(this)
               .transition()
               .attr("height", r * m)
               .attr("width", r * m)
