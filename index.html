@@ -127,6 +127,20 @@ var map = new google.maps.Map(d3.select("#map").node(), {
   mapTypeId: google.maps.MapTypeId.TERRAIN
 });
 
+      d3.selection.prototype.moveToFront = function () {
+          return this.each(function () {
+              this.parentNode.appendChild(this);
+          });
+      };
+      d3.selection.prototype.moveToBack = function () {
+          return this.each(function () {
+              var firstChild = this.parentNode.firstChild;
+              if (firstChild) {
+                  this.parentNode.insertBefore(this, firstChild);
+              }
+          });
+      };
+
 
 
 // Load the station data. When the data comes back, create an overlay.
@@ -300,8 +314,9 @@ d3.json("data.json", function(data) {
             .style("stroke", "black")
             .style("stroke-width", 5)
             .attr("preserveAspectRatio", "xMidYMid slice")
-          .attr("clip-path", function(d){return "url(#"+d.key+"_clip)";}) // clip the image
-          .on("mouseover", function(d){d3.select(this)
+            //.attr("clip-path", function(d){return "url(#"+d.key+"_clip)";}) // clip the image
+            .on("mouseover", function (d) {
+                d3.select(this).moveToFront()
               .transition()
               .attr("height", r * m)
               .attr("width", r * m)
