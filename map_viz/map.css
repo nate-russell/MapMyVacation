@@ -1,0 +1,77 @@
+#top {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+#main {
+    width: 80%;
+    height: 90%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+#rhs {
+}
+
+#lhs {
+}
+
+#description {
+    width: 400px;
+    height: 110px;
+    margin-top: 0px;
+    margin-left: 5px;
+    padding-left: 5px;
+    border-radius: 2px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: lightgrey;
+    box-shadow: lightgrey;
+}
+
+#album {
+    width: 400px;
+    height: 4px;
+    margin-left: 5px;
+    padding-left: 5px;
+}
+
+h1 {
+    color: #2ecc71;
+    font-weight: bold;
+}
+
+h2 {
+    color: #2ecc71;
+}
+
+h4 {
+    color: lightslategrey;
+}
+
+html, body, #map {
+    width: 800px;
+    height: 500px;
+    margin: 0;
+    padding: 0;
+    background-color: #333739;
+}
+
+#map {
+    outline: thin solid #2ecc71;
+}
+
+.marker {
+    fill: orange;
+    stroke: black;
+    stroke-width: 1.5px;
+}
+
+.marker:hover {
+    cursor: crosshair;
+}
+
+.stations {
+    background-color: rgba(0, 0, 0, 0);
+}

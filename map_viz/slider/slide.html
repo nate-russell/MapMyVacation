@@ -1,0 +1,80 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>My Now Amazing Webpage</title>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css"/>
+    <style>
+        #div {
+            padding: 10px;
+            margin: 10px;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+
+<body style="background-color:#333739;">
+
+<div class="big" style="height: 400px; width: 100%; background-color: black; margin:0 auto;">
+    <a href="http://imgur.com/0ZvDLAK"><img data-lazy="http://i.imgur.com/0ZvDLAK.jpg"
+                                            title="source: imgur.com"
+                                            preserveAspectRatio="xMidYMid slice"/></a>
+    <a href="http://imgur.com/2lNNvjP"><img src="http://i.imgur.com/2lNNvjP.jpg"
+                                            title="source: imgur.com"
+                                            preserveAspectRatio="xMidYMid slice"/></a>
+    <div style="background-color:orange;">your content 3</div>
+    <div style="background-color:yellow;">your content 4</div>
+    <div style="background-color:greenyellow;">your content 5</div>
+    <div style="background-color:green;">your content 6</div>
+    <div style="background-color:dodgerblue;">your content 7</div>
+    <div style="background-color:blue;">your content 8</div>
+    <div style="background-color:purple;">your content 9</div>
+</div>
+
+<div class="slider" style="width: 95%; height: 200px; margin:0 auto;">
+    <div style="background-color:red; ">your content 1</div>
+    <div style="background-color:orangered;">your content 2</div>
+    <div style="background-color:orange;">your content 3</div>
+    <div style="background-color:yellow;">your content 4</div>
+    <div style="background-color:greenyellow;">your content 5</div>
+    <div style="background-color:green;">your content 6</div>
+    <div style="background-color:dodgerblue;">your content 7</div>
+    <div style="background-color:blue;">your content 8</div>
+    <div style="background-color:purple;">your content 9</div>
+</div>
+
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+
+
+<script type="text/javascript">
+    $('.big').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        fade: true,
+        asNavFor: '.slider'
+    });
+    $(document).ready(function () {
+        $('.slider').slick({
+            arrows: true,
+            slidesToShow: 8,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 200,
+            asNavFor: '.big',
+            focusOnSelect: true
+        });
+    });
+</script>
+
+</body>
+</html>

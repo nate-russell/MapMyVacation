@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHn1WnMhCF-Me1-P0b4p_2wNxePg6JRGA"></script>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <!-- <script type="text/javascript" src="map.js"></script> -->
+    <link rel="stylesheet" type="text/css" href="map.css"/>
+</head>
+<body>
+<div id="top">
+    <h2> Map My Vacation (Code Under Development)</h2><a href="https://github.com/nate-russell/MapMyVacation"> Github
+    repo</a>
+</div>
+<div id="main">
+    <div id="lhs">
+        <div id="map"></div>
+    </div>
+    <div id="rhs">
+        <div id="description">
+            <h2 id="album_title">Album Title</h2>
+            <h4 id="album_text">Album Title</h4>
+        </div>
+        <div id="album">
+            <h1>You look very pretty gua</h1>
+            <h2>Click on an album tile to see the imgur album!</h2>
+            <blockquote id="album_block" class="imgur-embed-pub" lang="en">
+                <a id="album_a">View Photos on Imgur</a>
+            </blockquote>
+            <script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+        </div>
+    </div>
+</div>
+
+
+<!-- Google Maps + D3 Album-->
+<script type="text/javascript" src="map.js"></script>
+<script>googlemapvis("data.json")</script>
+
+
+</body>
+</html>
