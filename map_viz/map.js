@@ -7,8 +7,8 @@ function googlemapvis(jsonpath) {
 
 
     var album_div = document.getElementById("album");
-    var album_title = document.getElementById("album_title");
-    var album_text = document.getElementById("album_text");
+    var album_title = document.getElementById("album-title-text");
+    var album_text = document.getElementById("big-image-content-text");
     var album_block = document.getElementById("album_block");
     var album_a = document.getElementById("album_a");
 
@@ -22,31 +22,31 @@ function googlemapvis(jsonpath) {
         }, {
             "featureType": "landscape",
             "elementType": "geometry",
-            "stylers": [{"color": "#2ecc71"}]
-        }, {"featureType": "poi", "stylers": [{"color": "#2ecc71"}, {"lightness": -7}]}, {
+            "stylers": [{"color": "var(--accent)"}]
+        }, {"featureType": "poi", "stylers": [{"color": "#f44627"}, {"lightness": -7}]}, {
             "featureType": "road.highway",
             "elementType": "geometry",
-            "stylers": [{"color": "#2ecc71"}, {"lightness": -28}]
+            "stylers": [{"color": "#f44627"}, {"lightness": -28}]
         }, {
             "featureType": "road.arterial",
             "elementType": "geometry",
-            "stylers": [{"color": "#2ecc71"}, {"visibility": "on"}, {"lightness": -15}]
+            "stylers": [{"color": "#f44627"}, {"visibility": "on"}, {"lightness": -15}]
         }, {
             "featureType": "road.local",
             "elementType": "geometry",
-            "stylers": [{"color": "#2ecc71"}, {"lightness": -18}]
+            "stylers": [{"color": "#f44627"}, {"lightness": -18}]
         }, {"elementType": "labels.text.fill", "stylers": [{"color": "#ffffff"}]}, {
             "elementType": "labels.text.stroke",
             "stylers": [{"visibility": "off"}]
         }, {
             "featureType": "transit",
             "elementType": "geometry",
-            "stylers": [{"color": "#2ecc71"}, {"lightness": -34}]
+            "stylers": [{"color": "#f44627"}, {"lightness": -34}]
         }, {
             "featureType": "administrative",
             "elementType": "geometry",
             "stylers": [{"visibility": "on"}, {"color": "#333739"}, {"weight": 0.8}]
-        }, {"featureType": "poi.park", "stylers": [{"color": "#2ecc71"}]}, {
+        }, {"featureType": "poi.park", "stylers": [{"color": "#f44627"}]}, {
             "featureType": "road",
             "elementType": "geometry.stroke",
             "stylers": [{"color": "#333739"}, {"weight": 0.3}, {"lightness": 10}]
@@ -166,27 +166,20 @@ function googlemapvis(jsonpath) {
                     })
                     .on('click', function (d) {
                         d3.select(this)
+                        console.log('Clicked: ' + d.key)
 
+                        // Update Sliders
+                        $('#slider').slick('slickUnfilter')
+                        $('#big-image').slick('slickUnfilter')
+                        $('#slider').slick('slickFilter', '.album1')
+                        $('#big-image').slick('slickFilter', '.album1')
+                        console.log('Slider Filtered!')
 
                         // Update Text
                         album_text.textContent = d.key
                         album_title.textContent = d.key
-
-                        // Update Album Div Clone
-                        album_block.setAttribute('data-id', d.value.albumid)
-                        album_a.setAttribute('href', "//imgur.com/" + d.value.albumid)
-                        console.log('Post Update album_block')
-                        console.log(album_block.outerHTML)
-
-                        // Inject the HTML content
-                        album_div.innerHTML = album_block.outerHTML
-
-                        // Re-Add Embed script that transforms blockquote into iframe
-                        var imported = document.createElement('script')
-                        imported.src = '//s.imgur.com/min/embed.js'
-                        document.body.appendChild(imported)
+                        console.log('Text Updated!')
                         ;
-
                     })
                     .attr('x', function (d) {
                         d = projection.fromLatLngToDivPixel(d.value.lat_lng);
