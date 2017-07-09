@@ -168,12 +168,14 @@ function googlemapvis(jsonpath) {
                         d3.select(this)
                         console.log('Clicked: ' + d.key)
 
+                        console.log('.' + d.value.albumid)
                         // Update Sliders
                         $('#slider').slick('slickUnfilter')
                         $('#big-image').slick('slickUnfilter')
-                        $('#slider').slick('slickFilter', '.album1')
-                        $('#big-image').slick('slickFilter', '.album1')
+                        $('#slider').slick('slickFilter', '.' + d.value.albumid)
+                        $('#big-image').slick('slickFilter', '.' + d.value.albumid)
                         console.log('Slider Filtered!')
+
 
                         // Update Text
                         album_text.textContent = d.key

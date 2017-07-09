@@ -256,14 +256,14 @@
             margin: 0 auto;
             height: 322px;
             width: 100%;
-            background: black;
+            background: #262626;
         }
 
         #slider {
             margin: 0 auto;
             height: 125px;
             width: 84%;
-            background-color: black;
+            background-color: #262626;
             clear: left;
             padding: 0px;
         }
@@ -350,13 +350,11 @@
         }
 
 
-
-
     </style>
 </head>
 <div id="logodiv">
     <h1 id="logo">Map My Vacation</h1>
-    <a href="https://github.com/nate-russell/MapMyVacation"><h2 id="github">github</h2></a>
+    <a href="https://github.com/nate-russell/MapMyVacation"><h2 id="github">(github)</h2></a>
 </div>
 <body>
 <div id="tabs">
@@ -427,7 +425,7 @@
             variablewidth: true,
         });
     });
-    $("#big-image").on("beforeChange", function (event, slick, currentSlide, nextslide) {
+    $("#slider").on("beforeChange", function (event, slick, currentSlide, nextslide) {
         var dataId = $(slick.$slides[nextslide]);
         var img = dataId.context.getElementsByTagName("img")[0]
         img.setAttribute('crossOrigin', 'Anonymous')
