@@ -30,10 +30,10 @@ if __name__ == '__main__':
 
         for j, image in enumerate(client.get_album_images(album.id)):
             image_title = image.title if image.title else 'Untitled'
-            print('\t{0}: {1}'.format(image_title, image.link))
-            image_link = image.link
+            image_link = image.link[0:4] + 's' + image.link[4:]
             big_image_link = image_link[:-4] + 'h' + image_link[-4:]
             small_image_link = image_link[:-4] + 's' + image_link[-4:]
+            print('\t{0}: {1}'.format(big_image_link, small_image_link))
 
             big.write(
                 '<a class="%s"><img data-lazy="%s" class="bimg %s"/></a>' % (album.id, big_image_link, album.id))
