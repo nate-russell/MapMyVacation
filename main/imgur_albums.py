@@ -32,10 +32,11 @@ if __name__ == '__main__':
             image_title = image.title if image.title else 'Untitled'
             print('\t{0}: {1}'.format(image_title, image.link))
             image_link = image.link
+            big_image_link = image_link[:-4] + 'h' + image_link[-4:]
             small_image_link = image_link[:-4] + 's' + image_link[-4:]
 
             big.write(
-                '<a class="%s"><img data-lazy="%s" class="bimg %s"/></a>' % (album.id, image_link, album.id))
+                '<a class="%s"><img data-lazy="%s" class="bimg %s"/></a>' % (album.id, big_image_link, album.id))
             slider.write(
                 '<a class="%s"><img data-lazy="%s" class="simg %s"/></a>' % (album.id, small_image_link, album.id))
 

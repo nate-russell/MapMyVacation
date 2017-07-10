@@ -418,7 +418,7 @@
             slidesToShow: 8,
             slidesToScroll: 1,
             infinite: true,
-            autoplay: true,
+            autoplay: false,
             autoplaySpeed: 2000,
             asNavFor: '#big-image',
             focusOnSelect: true,
@@ -426,8 +426,13 @@
         });
     });
     $("#slider").on("beforeChange", function (event, slick, currentSlide, nextslide) {
-        var dataId = $(slick.$slides[nextslide]);
+        var dataId = $(slick.$slides[nextslide])
+        console.log('Before Change Triggered')
+        console.log('slick:', slick)
+        console.log('nextslide: ', nextslide)
+        console.log('dataId:', dataId)
         var img = dataId.context.getElementsByTagName("img")[0]
+        console.log(img)
         img.setAttribute('crossOrigin', 'Anonymous')
         img.setAttribute('src', img.src)
         img.addEventListener('load', function () {
@@ -435,12 +440,12 @@
             var swatches = vibrant.swatches()
             console.log(swatches['Vibrant'].getHex())
             if (swatches.hasOwnProperty('Vibrant') && swatches['Vibrant']) {
-                $("#big-image").animate({backgroundColor: swatches['Vibrant'].getHex()}, 100);
-                $("#album-title-text").animate({color: swatches['Vibrant'].getHex()}, 100);
-                $("#logo").animate({color: swatches['Vibrant'].getHex()}, 100);
-                $("#tab1").animate({outlineColor: swatches['Vibrant'].getHex()}, 100);
-                $("#map").animate({outlineColor: swatches['Vibrant'].getHex()}, 100);
-                $("#tabs .ui-tabs-nav .ui-state-active a").animate({backgroundColor: swatches['Vibrant'].getHex()}, 100);
+                $("#big-image").animate({backgroundColor: swatches['Vibrant'].getHex()}, 500);
+                $("#album-title-text").animate({color: swatches['Vibrant'].getHex()}, 500);
+                $("#logo").animate({color: swatches['Vibrant'].getHex()}, 500);
+                $("#tab1").animate({outlineColor: swatches['Vibrant'].getHex()}, 500);
+                $("#map").animate({outlineColor: swatches['Vibrant'].getHex()}, 500);
+                $("#tabs .ui-tabs-nav .ui-state-active a").animate({backgroundColor: swatches['Vibrant'].getHex()}, 500);
 
 
             }
