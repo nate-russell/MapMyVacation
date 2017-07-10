@@ -427,18 +427,18 @@
     });
     $("#slider").on("beforeChange", function (event, slick, currentSlide, nextslide) {
         var dataId = $(slick.$slides[nextslide])
-        console.log('Before Change Triggered')
-        console.log('slick:', slick)
-        console.log('nextslide: ', nextslide)
-        console.log('dataId:', dataId)
+        //console.log('Before Change Triggered')
+        //console.log('slick:', slick)
+        //console.log('nextslide: ', nextslide)
+        //console.log('dataId:', dataId)
         var img = dataId.context.getElementsByTagName("img")[0]
-        console.log(img)
+        //console.log(img)
         img.setAttribute('crossOrigin', 'Anonymous')
         img.setAttribute('src', img.src)
         img.addEventListener('load', function () {
             var vibrant = new Vibrant(img)
             var swatches = vibrant.swatches()
-            console.log(swatches['Vibrant'].getHex())
+            //console.log(swatches['Vibrant'].getHex())
             if (swatches.hasOwnProperty('Vibrant') && swatches['Vibrant']) {
                 $("#big-image").animate({backgroundColor: swatches['Vibrant'].getHex()}, 500);
                 $("#album-title-text").animate({color: swatches['Vibrant'].getHex()}, 500);
