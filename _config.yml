@@ -1,5 +1,6 @@
 gems:
   - jekyll-seo-tag
+  - jekyll-sitemap
 title: Map My Vacation
 description: Static web app visualizing vacation photos with D3.js, Tensorflow, Google Maps Javascript API, Slick
 url: https://nate-russell.github.io/MapMyVacation/
