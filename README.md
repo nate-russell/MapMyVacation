@@ -1,4 +1,4 @@
-#Map My Vacation
+# Map My Vacation
 Static Web Application and Python scripts for visualizing vacation photos on Geographic and Latent Semantic Maps.
 <a href="https://nate-russell.github.io/MapMyVacation/"><img src="pics/MapMyVacation.JPG" alt="Drawing" style="width: 400px;"/><a/>
 Github Pages [Demo](https://nate-russell.github.io/MapMyVacation/)
@@ -11,7 +11,7 @@ Github Pages [Demo](https://nate-russell.github.io/MapMyVacation/)
 5. [Slick](http://kenwheeler.github.io/slick/)
 5. [Jquery UI](https://jqueryui.com/)
 
-##Two kinds of "Maps"
+## Two kinds of "Maps"
 ##### "Map" in MapMyVacation refers to the two modes of visualization
 1. Image's Geographic Location using Google Maps
 2. Image's Latent 2D Embedding produced through Deep Convolution Networks and Manifold Embedding.
