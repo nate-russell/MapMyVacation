@@ -166,21 +166,21 @@ function googlemapvis(jsonpath) {
                     })
                     .on('click', function (d) {
                         d3.select(this)
-                        console.log('Clicked: ' + d.key)
+                        //console.log('Clicked: ' + d.key)
 
-                        console.log('.' + d.value.albumid)
+                        //console.log('.' + d.value.albumid)
                         // Update Sliders
                         $('#slider').slick('slickUnfilter')
                         $('#big-image').slick('slickUnfilter')
                         $('#slider').slick('slickFilter', '.' + d.value.albumid)
                         $('#big-image').slick('slickFilter', '.' + d.value.albumid)
-                        console.log('Slider Filtered!')
+                        //console.log('Slider Filtered!')
 
 
                         // Update Text
                         album_text.textContent = d.key
                         album_title.textContent = d.key
-                        console.log('Text Updated!')
+                        //console.log('Text Updated!')
                         ;
                     })
                     .attr('x', function (d) {
