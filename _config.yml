@@ -1,0 +1,14 @@
+gems:
+  - jekyll-seo-tag
+title: Map My Vacation
+description: Static web app visualizing vacation photos with D3.js, Tensorflow, Google Maps Javascript API, Slick
+url: https://nate-russell.github.io/MapMyVacation/
+author: Nathan Russell
+logo: /pics/MapMyVacation.JPG
+social:
+  name: Nate Russell
+  links:
+    - https://scholar.google.com/citations?user=3l0apHkAAAAJ&hl=en
+    - https://github.com/nate-russell
+    - https://www.linkedin.com/in/nathan-russell-bb572a41/
+language_TERRITORY: en_US
