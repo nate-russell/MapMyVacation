@@ -102,3 +102,6 @@ ENV/
 
 # My API keys
 /keys
+
+# The Tensorflow Models that are too big to push are ignored
+/scripts/checkpoints

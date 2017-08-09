@@ -73,18 +73,12 @@ def get_lat_lon(exif_data):
     return lat, lon
 
 
-
 class MapMyVacation:
-
-    def __init__(self,dir_paths):
+    def __init__(self, dir_paths):
         pass
 
     def push_2_imgur(self):
         pass
-
-
-
-
 
 
 if __name__ == '__main__':

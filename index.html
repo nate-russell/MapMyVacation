@@ -18,6 +18,12 @@
     <script type="application/ld+json">
     {"@context":"http://schema.org","@type":"WebSite","name":"Nate Russell","headline":"Nate Russell","author":{"@type":"Person","name":"Nate Russell"},"description":"Machine Learning Researcher. PhD student in Jian Peng’s Lab @ UIUC. Striving to advance the fields of machine learning and computational biology / medicine.","sameAs":["https://www.linkedin.com/in/nathan-russell-bb572a41/","https://scholar.google.com/citations?user=3l0apHkAAAAJ&hl=en","https://github.com/nate-russell"],"url":"http://nate-russell.github.io/"}
 
+
+
+
+
+
+
     </script>
     <!-- End Jekyll SEO tag -->
     <meta name="keywords" content="D3.js, Tensorflow, Deep Learning, Data Visualization, Google Maps, tutorial">
@@ -47,6 +53,7 @@
 
     <!-- vibrant -->
     <script src="Vibrant.js"></script>
+    <script src="progressbar.js"></script>
 
     <!-- MAP Content -->
     <script type="text/javascript"
@@ -65,11 +72,14 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-
     <script>
         $(function () {
             $("#tabs").tabs();
         });
+        $(function () {
+            $("#tab2-contents").tabs();
+        });
+
     </script>
 
     <!-- CSS -->
@@ -85,6 +95,8 @@
             background-color: #333739;
             padding: 5px;
             margin: 0 auto;
+            width: 100%;
+            height: 100%;
         }
 
         h2 {
@@ -161,6 +173,39 @@
             outline: thin solid white;
         }
 
+        #tab21 {
+            float: right;
+            border: none;
+            padding: 0px;
+            margin: 0 auto;
+            height: 100%;
+            width: 100%;
+            padding-bottom: 5px;
+            outline: thin solid white;
+        }
+
+        #tab22 {
+            float: right;
+            border: none;
+            padding: 0px;
+            margin: 0 auto;
+            height: 100%;
+            width: 100%;
+            padding-bottom: 5px;
+            outline: thin solid white;
+        }
+
+        #tab23 {
+            float: right;
+            border: none;
+            padding: 0px;
+            margin: 0 auto;
+            height: 100%;
+            width: 100%;
+            padding-bottom: 5px;
+            outline: thin solid white;
+        }
+
         /*
         #tabs {
             float: right;
@@ -221,6 +266,56 @@
         }
         */
 
+        #doughnut {
+            width: 99%;
+            height: 260px;
+            border: 0.5px solid #888;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        path.slice {
+            stroke: #888;
+            stroke-width: 0.01em;
+            border: 0.5px solid #888;
+        }
+
+        polyline {
+            opacity: .75;
+            stroke-width: 2px;
+            fill: none;
+        }
+
+        .labelValue {
+            font-size: 60%;
+            opacity: .5;
+
+        }
+
+        .toolTip {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            position: absolute;
+            display: none;
+            width: auto;
+            height: auto;
+            background: none repeat scroll 0 0 white;
+            border: 0 none;
+            border-radius: 8px 8px 8px 8px;
+            box-shadow: -3px 3px 15px #888888;
+            color: black;
+            font: 12px sans-serif;
+            padding: 5px;
+            text-align: center;
+        }
+
+        text {
+            font: 12px sans-serif;
+            text-shadow: 0.01em 0px 0 #fff;
+        }
+
         #tab2 {
             float: right;
             border-left: none;
@@ -245,21 +340,43 @@
         }
 
         #tab2-left {
-            height: 100%;
+            height: 99%;
             width: 60%;
             padding: 0px;
             margin: 0 auto;
-            background-color: blue;
-            float: left
+            background-color: inherit;
+            float: left;
         }
 
         #tab2-right {
-            height: 100%;
+            height: 99%;
             width: 40%;
             padding: 0px;
             margin: 0 auto;
-            background-color: purple;
+            background-color: inherit;
             float: left
+        }
+
+        #tab2-img {
+            height: 400px;
+            background-color: inherit;
+            preserveAspectRatio: "xMidYMid slice";
+            padding: 0px;
+            margin: 0 auto;
+        }
+
+        #damage {
+            background-color: inherit;
+            preserveAspectRatio: "xMidYMid slice";
+            padding: 5px;
+            margin: 0 auto;
+            max-width: 100%;
+            height: 300px;
+            display: block;
+        }
+
+        #tab2-contents {
+            height: 200px;
         }
 
         #map {
@@ -320,6 +437,8 @@
         }
 
         #tabs {
+            width: 100%;
+
             padding: 0px;
             background: none;
             border-width: 0px;
@@ -388,6 +507,67 @@
             padding-left: 10px;
         }
 
+        #scatter-tools {
+            position: absolute;
+            padding-left: 0px;
+            margin-left: 40px;
+            width: 0px;
+            height: 0px;
+            background-color: lightcoral;
+            overflow: visible;
+            white-space: inherit;
+            display: block;
+            float: none;
+        }
+
+        .d-button {
+            position: absolute;
+            border: 0.5px solid transparent;
+            background: transparent;
+            margin-left: 230px;
+            margin-top: 80px;
+            float: none;
+            text-align: left;
+            display: block;
+            height: 50px;
+            width: 130px;
+            overflow: hidden;
+            white-space: nowrap;
+            color: darkgray;
+            font-size: 12px;
+            font-style: italic;
+            font-family: "AR DESTINE";
+        }
+
+        .sc-button {
+            background: #2b2e30;
+            border: 0.5px solid darkgrey;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            float: none;
+            text-align: left;
+            display: block;
+            height: 25px;
+            width: 27px;
+            overflow: hidden;
+            margin-top: 2px;
+            -webkit-transition: All 0.5s ease;
+            -moz-transition: All 0.5s ease;
+            -o-transition: All 0.5s ease;
+            -ms-transition: All 0.5s ease;
+            transition: All 0.5s ease;
+            white-space: nowrap;
+            color: darkgray;
+            font-size: 2px;
+            font-style: italic;
+            font-family: "AR DESTINE";
+        }
+
+        .sc-button:hover {
+            width: 155px;
+        }
+
 
     </style>
 </head>
@@ -397,8 +577,6 @@
 </div>
 <body>
 <div id="tabs">
-
-
     <ul id="tabtop">
         <li><a id="tabtab1" class="tabtab" href="#tab1">Google Map</a></li>
         <li><a id="tabtab2" class="tabtab" href="#tab2">Semantic Map</a></li>
@@ -423,13 +601,49 @@
         <div id="slider"></div>
     </div>
     <div id="tab2">
+        <script src="//d3js.org/d3.v4.min.js"></script>
         <div id="tab2-left">
-            scatter map
+            <div id="scatter-tools">
+                <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+                <button type="submit" class="sc-button" id="voroni-button">
+                    <i class="fa fa-eye" aria-hidden="true"></i> &ensp;View Voroni
+                </button>
+                <button type="submit" class="sc-button" id="colorby-button">
+                    <i class="fa fa-camera-retro" aria-hidden="true"></i> &ensp; ColorBy: Album
+                </button>
+                <button type="submit" class="sc-button" id="preload-button">
+                    <i class="fa fa-download" aria-hidden="true"></i> &ensp; Cache Images
+                </button>
+                <button type="submit" class="sc-button" id="reset-button">
+                    <i class="fa fa-search-minus" aria-hidden="true"></i> &ensp;Reset Zoom
+                </button>
+            </div>
         </div>
         <div id="tab2-right">
-            pic stuff
+            <div id="tab2-img-container">
+                <img id="damage" src="favicon.ico">
+            </div>
+            <div id="doughnut">
+                <button type="submit" class="d-button" id="doughnut-button">
+                    Top 5 Classes <br> 50%
+                </button>
+            </div>
+            <!--
+            <div id="tab2-contents">
+                <ul id="tab2-contents-tabs">
+                    <li><a id="tab2tab1" class="tabtab" href="#tab21">Info</a></li>
+                    <li><a id="tab2tab2" class="tabtab" href="#tab22">Labels</a></li>
+                    <li><a id="tab2tab3" class="tabtab" href="#tab23">Neighbors</a></li>
+                </ul>
+                <div id="tab21"> This is where info should go</div>
+                <div id="tab22"> </div>
+                <div id="tab23"> This is where the neighbors should go</div>
+            </div>
+            -->
         </div>
+        <script src="scatter_viz/dist.js"></script>
     </div>
+
 </div>
 
 
@@ -485,8 +699,6 @@
                 $("#tab1").animate({outlineColor: swatches['Vibrant'].getHex()}, 500);
                 $("#map").animate({outlineColor: swatches['Vibrant'].getHex()}, 500);
                 $("#tabs .ui-tabs-nav .ui-state-active a").animate({backgroundColor: swatches['Vibrant'].getHex()}, 500);
-
-
             }
         });
     })
@@ -495,6 +707,66 @@
 <!-- Google Maps + D3 Album-->
 <script type="text/javascript" src="map_viz/map.js"></script>
 <script>googlemapvis("map_viz/data.json")</script>
+
+
+<style>
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0); /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        position: relative;
+        background-color: #262626;
+        margin: auto;
+        padding: 0;
+        border: 1px solid #888;
+        width: 80%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -webkit-animation-name: animatetop;
+        -webkit-animation-duration: 0.4s;
+        animation-name: animatetop;
+        animation-duration: 0.4s
+    }
+
+    .modal-body {
+        padding: 2px 16px;
+    }
+
+
+</style>
+
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-body">
+            <h1>PreLoad Image Urls</h1>
+            <div id="preloadbar"></div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #preloadbar {
+        margin: 20px;
+        width: 200px;
+        height: 200px;
+        position: relative;
+    }
+</style>
 
 
 </body>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<div id="chart"></div>
+<style>
+    body {
+        font: 10px Arial;
+
+    }
+
+    .axis path {
+        display: none;
+    }
+
+    .axis line {
+        stroke-opacity: 0.3;
+    }
+
+    .line {
+        fill: none;
+        stroke: steelblue;
+        stroke-width: 1.5px;
+    }
+
+    .site--hover {
+        stroke: #000;
+        stroke-width: 4px;
+    }
+
+    button {
+        position: absolute;
+        top: 20px;
+        left: 80px;
+    }
+
+    .voronoi path {
+        fill: none;
+        pointer-events: all;
+    }
+
+    .voronoi--show path {
+        stroke: red;
+        stroke-opacity: 0.2;
+    }
+
+</style>
+<body>
+<button>Reset</button>
+<label id="form" for="show-voronoi">
+    Show Voronoi
+    <input type="checkbox" id="show-voronoi" disabled>
+</label>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+
+    var margin = {top: 20, right: 20, bottom: 50, left: 50},
+        width = 1000 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
+
+    var parseTime = d3.timeParse("%d/%m/%Y %H:%M");
+    bisectDate = d3.bisector(function (d) {
+        return d.dt;
+    }).left;
+    formatValue = d3.format(",.2f"),
+        formatCurrency = function (d) {
+            return "£" + formatValue(d);
+        };
+
+    var x = d3.scaleTime()
+        .range([0, width]);
+
+    var y = d3.scaleLinear()
+        .range([height, 0]);
+
+    var z = d3.scaleOrdinal(d3.schemeCategory10);
+
+    var voronoi = d3.voronoi()
+        .x(function (d) {
+            return x(d.dt);
+        })
+        .y(function (d) {
+            return y(d.price);
+        })
+        .extent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]]);
+
+    svg = d3.select('#chart')
+        .append("svg:svg")
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+        .append("svg:g")
+        .attr("id", "group")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    // Get the data
+    d3.csv("data.csv", function (error, data) {
+        if (error) throw error;
+
+        data.forEach(function (d, i) {
+            d.dt = parseTime(d.dt);
+            d.price = +d.price;
+        });
+
+        var nest = d3.nest()
+            .key(function (d) {
+                return d.site;
+            })
+            .sortKeys(d3.ascending)
+            .entries(data);
+
+        sites = {};
+        d3.map(data, function (d) {
+            return d.site;
+        })
+            .keys() // unique sites
+            .forEach(function (d, i) {
+                sites[d] = nest[i].values
+            });
+
+        console.log("sites4:", sites);
+
+        // Scale the range of the data
+        var date_max = d3.max(data, function (d) {
+            return d.dt;
+        });
+        console.log("Date range: ", d3.extent(data, function (d) {
+            return d.dt;
+        }));
+        x.domain(d3.extent(data, function (d) {
+            return d.dt;
+        }));
+        y.domain(d3.extent(data, function (d) {
+            return d.price;
+        }));
+        z.domain(d3.map(data, function (d) {
+            return d.site;
+        }).keys());
+
+
+        var xAxis = d3.axisBottom(x)
+            .ticks((width + 2) / (height + 2) * 5)
+            .tickSize(-height)
+            .tickPadding(10);
+
+        var yAxis = d3.axisRight(y)
+            .ticks(5)
+            .tickSize(width)
+            .tickPadding(-20 - width);
+
+        svg.append("text")
+            .attr("transform",
+                "translate(" + (width / 2) + " ," + (height + margin.top + 20) + ")")
+            .style("font-size", "12px")
+            .style("font-family", "sans-serif")
+            .style("text-anchor", "middle")
+            .text("Date/Time");
+
+        svg.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - margin.left / 1.2)
+            .attr("x", 0 - (height / 2))
+            .attr("dy", "1em")
+            .style("font-size", "12px")
+            .style("text-anchor", "middle")
+            .text("Price");
+
+        var gX = svg.append("g")
+            .attr("class", "axis axis--x")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+        var gY = svg.append("g")
+            .attr("class", "axis axis--y")
+            .call(yAxis);
+
+        svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x).ticks(0));
+
+        svg.append("g")
+            .call(d3.axisLeft(y).ticks(0));
+
+        var chartBody = svg.append("g")
+            .attr("class", "chartbody")
+            .attr("clip-path", "url(#clip)");
+
+        for (var key in sites) {
+            if (sites.hasOwnProperty(key)) {
+                console.log("key:", key, [sites[key]]);
+                var priceSeries = d3.circle()
+                    .x(function (d) {
+                        return x(d.dt);
+                    })
+                    .y(function (d) {
+                        return y(d.price);
+                    });
+                chartBody.append("path")
+                    .data([sites[key]])
+                    .attr("class", "line")
+                    .attr("id", key)
+                    .attr("d", priceSeries)
+                    .style("stroke", z(key));
+            }
+        }
+
+        svg.append("defs").append("clipPath")
+            .attr("id", "clip")
+            .append("rect")
+            .attr("width", width)
+            .attr("height", height);
+
+        var focus = svg.append("g")
+            .attr("transform", "translate(-100,-100)");
+
+        focus.append("circle")
+            .attr("class", "y")
+            .style("stroke", "steelblue")
+            .attr("r", 4)
+            .attr("clip-path", "url(#clip)");
+
+        focus.append("text")
+            .attr("dy", ".35em")
+            .attr("clip-path", "url(#clip)");
+
+        var voronoiGroup = svg.append("g")
+            .attr("class", "voronoiParent")
+            .append("g")
+            .attr("class", "voronoi")
+            .attr("clip-path", "url(#clip)");
+
+        voronoiGroup.selectAll("path")
+            .data(voronoi.polygons(data))
+            .enter()
+            .append("path")
+            .attr("d", function (d) {
+                return d ? "M" + d.join("L") + "Z" : null;
+            })
+            .on("mouseover", mouseover)
+            .on("mouseout", mouseout);
+
+        var zoom = d3.zoom()
+            .scaleExtent([0.75, 15000])
+            .translateExtent([[-100000, -100000], [100000, 100000]])
+            .on("zoom", zoomed);
+
+        d3.select(".voronoiParent").call(zoom);
+
+        d3.select("button").on("click", resetted);
+
+        d3.select("#show-voronoi")
+            .property("disabled", false)
+            .on("change", function () {
+                voronoiGroup.classed("voronoi--show", this.checked);
+            });
+
+        function mouseover(d) {
+            var transform = d3.zoomTransform(d3.select(".voronoiParent")._groups[0][0]);
+            console.log(transform);
+            var xt = transform.rescaleX(x), yt = transform.rescaleY(y);
+            d3.select("#" + d.data.site).classed("site--hover", true);
+            focus.select("circle.y")
+                .attr('cx', function () {
+                    return transform.applyX(x(d.data.dt));
+                })
+                .attr('cy', function () {
+                    return transform.applyY(y(d.data.price));
+                })
+                .attr("transform", "translate(100,100)")
+        }
+
+        function mouseout(d) {
+            d3.select("#" + d.data.site).classed("site--hover", false);
+            focus.select("circle.y").attr("transform", "translate(-10000,-10000)");
+        }
+
+        function mouseDate(scale) {
+            var g = d3.select("#group")._groups[0][0]
+            var x0 = scale.invert(d3.mouse(g)[0])
+            i = bisectDate(data, x0, 1)
+            d0 = data[i - 1];
+            if (d0.dt === date_max) {
+                d = d0;
+            }
+            else {
+                var d1 = data[i]
+                d = x0 - d0.dt > d1.dt - x0 ? d1 : d0;
+            }
+            return d;
+        }
+
+        function zoomed() {
+
+            gX.call(xAxis.scale(d3.event.transform.rescaleX(x)));
+            gY.call(yAxis.scale(d3.event.transform.rescaleY(y)));
+            var t = d3.event.transform,
+                xt = t.rescaleX(x),
+                yt = t.rescaleY(y)
+            x_date = mouseDate(xt);
+
+            var priceSeries2 = d3.circle()
+                .defined(function (d) {
+                    return d.price != 0;
+                })
+                .x(function (d) {
+                    return xt(d.dt);
+                })
+                .y(function (d) {
+                    return yt(d.price);
+                });
+
+            var voronoi2 = d3.voronoi()
+                .x(function (d) {
+                    return xt(d.dt);
+                })
+                .y(function (d) {
+                    return yt(d.price);
+                })
+                .extent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]]);
+
+            chartBody.selectAll("path")
+                .attr("d", priceSeries2);
+
+            focus.select("circle.y")
+                .attr('cx', function () {
+                    return t.applyX(x(x_date.dt));
+                })
+                .attr('cy', function () {
+                    return t.applyY(y(x_date.price));
+                });
+
+            voronoiGroup
+                .attr("transform", d3.event.transform)
+
+        }
+
+        function resetted() {
+            d3.select(".voronoiParent").transition()
+                .duration(750)
+                .call(zoom.transform, d3.zoomIdentity);
+        }
+
+    });
+
+</script>
+</body>
