@@ -11,7 +11,7 @@ function getRandomColor() {
 }
 
 
-d3.json("data/semantic.json", function (data) {
+d3.json("data/semantic2.json", function (data) {
 
     var color_status = 0;
 
